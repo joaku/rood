@@ -3,13 +3,15 @@
  * to disable, edit config/environment/index.js, and set `seedDB: false`
  */
 
-'use strict';
+ 'use strict';
 
-var Thing = require('../api/thing/thing.model');
-var User = require('../api/user/user.model');
-var Exercise = require('../api/exercise/exercise.model');
+ var Thing = require('../api/thing/thing.model');
+ var User = require('../api/user/user.model');
+ var Exercise = require('../api/exercise/exercise.model');
+ var Application = require('../api/application/application.model');
+ var Apptype = require('../api/apptype/apptype.model');
 
-Thing.find({}).remove(function() {
+ Thing.find({}).remove(function() {
   Thing.create({
     name : 'Development Tools',
     info : 'Integration with popular tools such as Bower, Grunt, Karma, Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, Stylus, Sass, CoffeeScript, and Less.'
@@ -44,13 +46,34 @@ User.find({}).remove(function() {
     email: 'admin@admin.com',
     password: 'admin'
   }, function() {
-      console.log('finished populating users');
-    }
+    console.log('finished populating users');
+  }
   );
 });
 
+var id_repeatition = "552b1dd266100f193872ea88";
+var id_time = "552b1dd266800f193872ea88";
+var id_isometric = "552b9dd266100f193872ea88";
+Apptype.find({}).remove(function() {
+  Apptype.create({
+    _id: id_repeatition,
+    name: 'Repeatition',
+  }, {
+    _id: id_time,
+    name: 'Time',
+  }, {
+    _id: id_isometric,
+    name: 'Isometric',
+  }, function() {
+    console.log('finished populating exercises');
+  }
+  );
+});
+
+var id_pullup = "552b167820466d48338286c5";
 Exercise.find({}).remove(function() {
   Exercise.create({
+    _id: id_pullup,
     name: 'Pull up',
     url_animation: 'http://media2.giphy.com/media/8KrhxtEsrdhD2/giphy.gif',
     active: true,
@@ -62,7 +85,37 @@ Exercise.find({}).remove(function() {
     name: 'Plank',
     active: true,
   }, function() {
-      console.log('finished populating exercises');
-    }
+    console.log('finished populating exercises');
+  }
+  );
+});
+
+Application.find({}).remove(function() {
+  Application.create({
+    name: 'Fast Pull up',
+    exercise: id_pullup,
+    type: id_repeatition,
+    total_type: 10,
+    single_duration: 1000,
+    active: true,
+  },
+  {
+    name: 'Slow Pull up',
+    exercise: id_pullup,
+    type: id_repeatition,
+    total_type: 10,
+    single_duration: 2000,
+    active: true,
+  },
+  {
+    name: 'Soft Pull up',
+    exercise: id_pullup,
+    type: id_isometric,
+    total_type: 12,
+    single_duration: 1500,
+    active: true,
+  }, function() {
+    console.log('finished populating applications');
+  }
   );
 });
