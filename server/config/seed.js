@@ -12,6 +12,7 @@
  var Apptype = require('../api/apptype/apptype.model');
  var Part = require('../api/part/part.model');
  var Parttype = require('../api/parttype/parttype.model');
+ var Rutine = require('../api/rutine/rutine.model');
 
  Thing.find({}).remove(function() {
   Thing.create({
@@ -67,7 +68,7 @@ Apptype.find({}).remove(function() {
     _id: id_isometric,
     name: 'Isometric',
   }, function() {
-    console.log('finished populating exercises');
+    console.log('finished populating application types');
   }
   );
 });
@@ -143,13 +144,17 @@ Parttype.find({}).remove(function() {
     _id: id_calm,
     name: 'Back to Calm'
   }, function() {
-    console.log('finished populating Part Types');
+    console.log('finished populating part types');
   }
   );
 });
 
+var id_part1 = "562b1dd266100f193875ea88";
+var id_part2 = "572b1dd266100f193875ea88";
+var id_part3 = "582b1dd266100f193875ea88";
 Part.find({}).remove(function() {
   Part.create({
+    _id: id_part1,
     parttype: id_warming,
     applications: [
     {
@@ -160,9 +165,46 @@ Part.find({}).remove(function() {
       application: id_softpullup
     } 
     ]
+  },
+  {
+    _id: id_part2,
+    parttype: id_develop,
+    applications: [
+    {
+      order: 1,
+      application: id_softpullup
+    },{
+      order: 2,
+      application: id_slowpullup
+    } 
+    ]
+  },
+  {
+    _id: id_part3,
+    parttype: id_calm,
+    applications: [
+    {
+      order: 1,
+      application: id_slowpullup
+    },{
+      order: 2,
+      application: id_softpullup
+    } 
+    ]
   }
   , function() {
-    console.log('finished populating Parts');
+    console.log('finished populating parts');
+  }
+  );
+});
+
+Rutine.find({}).remove(function() {
+  Rutine.create({
+    name: "FRAN",
+    parts: [id_part1, id_part2, id_part3]
+  }
+  , function() {
+    console.log('finished populating rutines');
   }
   );
 });

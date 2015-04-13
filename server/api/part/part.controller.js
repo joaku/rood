@@ -5,7 +5,10 @@ var Part = require('./part.model');
 
 // Get list of parts
 exports.index = function(req, res) {
-  Part.find(function (err, parts) {
+  //Part.find(function (err, parts) {
+  Part.find({})
+  .populate("parttypes")
+  .exec(function (err, parts) {
     if(err) { return handleError(res, err); }
     return res.json(200, parts);
   });

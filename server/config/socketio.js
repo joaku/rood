@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/rutine/rutine.socket').register(socket);
   require('../api/parttype/parttype.socket').register(socket);
   require('../api/part/part.socket').register(socket);
   require('../api/apptype/apptype.socket').register(socket);
