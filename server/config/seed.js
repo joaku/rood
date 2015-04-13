@@ -10,6 +10,8 @@
  var Exercise = require('../api/exercise/exercise.model');
  var Application = require('../api/application/application.model');
  var Apptype = require('../api/apptype/apptype.model');
+ var Part = require('../api/part/part.model');
+ var Parttype = require('../api/parttype/parttype.model');
 
  Thing.find({}).remove(function() {
   Thing.create({
@@ -90,8 +92,13 @@ Exercise.find({}).remove(function() {
   );
 });
 
+
+var id_fastpullup = "552b20af7460b1e639d8ef89";
+var id_slowpullup = "552b20af7460b1e639d8ef88";
+var id_softpullup = "552b20af7460b1e639d8ef87";
 Application.find({}).remove(function() {
   Application.create({
+    _id: id_fastpullup,
     name: 'Fast Pull up',
     exercise: id_pullup,
     type: id_repeatition,
@@ -100,6 +107,7 @@ Application.find({}).remove(function() {
     active: true,
   },
   {
+    _id: id_slowpullup,
     name: 'Slow Pull up',
     exercise: id_pullup,
     type: id_repeatition,
@@ -108,6 +116,7 @@ Application.find({}).remove(function() {
     active: true,
   },
   {
+    _id: id_softpullup,
     name: 'Soft Pull up',
     exercise: id_pullup,
     type: id_isometric,
@@ -116,6 +125,44 @@ Application.find({}).remove(function() {
     active: true,
   }, function() {
     console.log('finished populating applications');
+  }
+  );
+});
+
+var id_warming = "552b1dd266100f193875ea88";
+var id_develop = "552b1dd266800f193876ea88";
+var id_calm = "552b9dd266100f193877ea88";
+Parttype.find({}).remove(function() {
+  Parttype.create({
+    _id: id_warming,
+    name: 'Warming'
+  }, {
+    _id: id_time,
+    name: 'Develop'
+  }, {
+    _id: id_calm,
+    name: 'Back to Calm'
+  }, function() {
+    console.log('finished populating Part Types');
+  }
+  );
+});
+
+Part.find({}).remove(function() {
+  Part.create({
+    parttype: id_warming,
+    applications: [
+    {
+      order: 1,
+      application: id_fastpullup
+    },{
+      order: 2,
+      application: id_softpullup
+    } 
+    ]
+  }
+  , function() {
+    console.log('finished populating Parts');
   }
   );
 });
