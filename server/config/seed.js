@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Exercise = require('../api/exercise/exercise.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -44,6 +45,24 @@ User.find({}).remove(function() {
     password: 'admin'
   }, function() {
       console.log('finished populating users');
+    }
+  );
+});
+
+Exercise.find({}).remove(function() {
+  Exercise.create({
+    name: 'Pull up',
+    url_animation: 'http://media2.giphy.com/media/8KrhxtEsrdhD2/giphy.gif',
+    active: true,
+  }, {
+    name: 'Push up',
+    url_animation: 'http://cdn.osxdaily.com/wp-content/uploads/2013/07/dancing-banana.gif',
+    active: true,
+  }, {
+    name: 'Plank',
+    active: true,
+  }, function() {
+      console.log('finished populating exercises');
     }
   );
 });
