@@ -1,0 +1,12 @@
+.col-md-12
+	div(ng-repeat="rutine in rutines")
+		div
+			p {{rutine.name}}
+			p {{rutine.user.name}}
+			div(ng-repeat="part in rutine.parts")
+				p {{part.parttype.name}}
+				div(ng-repeat="application in part.applications | orderBy:-order")
+					p {{application.order + " " + application.application.name}}
+					p {{application.application.exercise}}
+				hr
+			hr

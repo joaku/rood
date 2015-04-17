@@ -36,6 +36,7 @@
 
 User.find({}).remove(function() {
   User.create({
+    _id: '553062b619e974c01aebedf4',
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
@@ -119,6 +120,7 @@ Parttype.find({}).remove(function() {
 Rutine.find({}).remove(function() {
   Rutine.create({
     name: "FRAN",
+    user: "553062b619e974c01aebedf4",
     parts: [{
       parttype: id_warming,
       applications: [

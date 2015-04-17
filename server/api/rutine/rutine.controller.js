@@ -5,18 +5,30 @@ var Rutine = require('./rutine.model');
 
 // Get list of rutines
 exports.index = function(req, res) {
-  //Rutine.find(function (err, rutines) {
-    Rutine.find({})
-    .populate("parts")
-    .exec(function (err, rutines) {
-      if(err) { return handleError(res, err); }
-      return res.json(200, rutines);
-    });
-  };
+  Rutine.find(function (err, rutines) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, rutines);
+  });
+};
+
+// Get list of rutines
+exports.allPopulated = function(req, res) {
+  Rutine.find({})
+  .populate('user','-salt -hashedPassword')
+  .populate('parts.parttype','_id name')
+  .populate('parts.applications.application.type','_id name')
+  .populate('parts.applications.application.exercise','_id name url_animation ')
+  .exec(function (err, rutines) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, rutines);
+  });
+};
 
 // Get a single rutine
 exports.show = function(req, res) {
-  Rutine.findById(req.params.id, function (err, rutine) {
+  Rutine.findById(req.params.id)
+  .populate('user','-salt -hashedPassword')
+  .exec(function (err, rutine) {
     if(err) { return handleError(res, err); }
     if(!rutine) { return res.send(404); }
     return res.json(rutine);
