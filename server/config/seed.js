@@ -8,9 +8,7 @@
  var Thing = require('../api/thing/thing.model');
  var User = require('../api/user/user.model');
  var Exercise = require('../api/exercise/exercise.model');
- var Application = require('../api/application/application.model');
  var Apptype = require('../api/apptype/apptype.model');
- var Part = require('../api/part/part.model');
  var Parttype = require('../api/parttype/parttype.model');
  var Rutine = require('../api/rutine/rutine.model');
 
@@ -54,24 +52,6 @@ User.find({}).remove(function() {
   );
 });
 
-var id_repeatition = "552b1dd266100f193872ea88";
-var id_time = "552b1dd266800f193872ea88";
-var id_isometric = "552b9dd266100f193872ea88";
-Apptype.find({}).remove(function() {
-  Apptype.create({
-    _id: id_repeatition,
-    name: 'Repeatition',
-  }, {
-    _id: id_time,
-    name: 'Time',
-  }, {
-    _id: id_isometric,
-    name: 'Isometric',
-  }, function() {
-    console.log('finished populating application types');
-  }
-  );
-});
 
 var id_pullup = "552b167820466d48338286c5";
 Exercise.find({}).remove(function() {
@@ -94,42 +74,28 @@ Exercise.find({}).remove(function() {
 });
 
 
-var id_fastpullup = "552b20af7460b1e639d8ef89";
-var id_slowpullup = "552b20af7460b1e639d8ef88";
-var id_softpullup = "552b20af7460b1e639d8ef87";
-Application.find({}).remove(function() {
-  Application.create({
-    _id: id_fastpullup,
-    name: 'Fast Pull up',
-    exercise: id_pullup,
-    type: id_repeatition,
-    total_type: 10,
-    single_duration: 1000,
-    active: true,
-  },
-  {
-    _id: id_slowpullup,
-    name: 'Slow Pull up',
-    exercise: id_pullup,
-    type: id_repeatition,
-    total_type: 10,
-    single_duration: 2000,
-    active: true,
-  },
-  {
-    _id: id_softpullup,
-    name: 'Soft Pull up',
-    exercise: id_pullup,
-    type: id_isometric,
-    total_type: 12,
-    single_duration: 1500,
-    active: true,
+/* Applications */
+
+var id_repeatition = "552b1dd266100f193872ea88";
+var id_time = "552b1dd266800f193872ea88";
+var id_isometric = "552b9dd266100f193872ea88";
+Apptype.find({}).remove(function() {
+  Apptype.create({
+    _id: id_repeatition,
+    name: 'Repeatition',
+  }, {
+    _id: id_time,
+    name: 'Time',
+  }, {
+    _id: id_isometric,
+    name: 'Isometric',
   }, function() {
-    console.log('finished populating applications');
+    console.log('finished populating application types');
   }
   );
 });
 
+/* Part Types */
 var id_warming = "552b1dd266100f193875ea88";
 var id_develop = "552b1dd266800f193876ea88";
 var id_calm = "552b9dd266100f193877ea88";
@@ -149,59 +115,89 @@ Parttype.find({}).remove(function() {
   );
 });
 
-var id_part1 = "562b1dd266100f193875ea88";
-var id_part2 = "572b1dd266100f193875ea88";
-var id_part3 = "582b1dd266100f193875ea88";
-Part.find({}).remove(function() {
-  Part.create({
-    _id: id_part1,
-    parttype: id_warming,
-    applications: [
-    {
-      order: 1,
-      application: id_fastpullup
-    },{
-      order: 2,
-      application: id_softpullup
-    } 
-    ]
-  },
-  {
-    _id: id_part2,
-    parttype: id_develop,
-    applications: [
-    {
-      order: 1,
-      application: id_softpullup
-    },{
-      order: 2,
-      application: id_slowpullup
-    } 
-    ]
-  },
-  {
-    _id: id_part3,
-    parttype: id_calm,
-    applications: [
-    {
-      order: 1,
-      application: id_slowpullup
-    },{
-      order: 2,
-      application: id_softpullup
-    } 
-    ]
-  }
-  , function() {
-    console.log('finished populating parts');
-  }
-  );
-});
 
 Rutine.find({}).remove(function() {
   Rutine.create({
     name: "FRAN",
-    parts: [id_part1, id_part2, id_part3]
+    parts: [{
+      parttype: id_warming,
+      applications: [
+      {
+        order: 1,
+        application: {
+          name: 'Fast Pull up',
+          exercise: id_pullup,
+          type: id_repeatition,
+          total_type: 10,
+          single_duration: 1000,
+          active: true,
+        }
+      },
+      {
+        order: 2,
+        application: {
+          name: 'Soft Pull up',
+          exercise: id_pullup,
+          type: id_isometric,
+          total_type: 12,
+          single_duration: 1500,
+          active: true,
+        }
+      } 
+      ]
+    },
+    {
+      parttype: id_develop,
+      applications: [
+      {
+        order: 1,
+        application: {
+          name: 'Soft Pull up',
+          exercise: id_pullup,
+          type: id_isometric,
+          total_type: 12,
+          single_duration: 1500,
+          active: true,
+        }
+      },{
+        order: 2,
+        application: {
+          name: 'Slow Pull up',
+          exercise: id_pullup,
+          type: id_repeatition,
+          total_type: 10,
+          single_duration: 2000,
+          active: true,
+        }
+      } 
+      ]
+    },
+    {
+      parttype: id_calm,
+      applications: [
+      {
+        order: 1,
+        application: {
+          name: 'Slow Pull up',
+          exercise: id_pullup,
+          type: id_repeatition,
+          total_type: 10,
+          single_duration: 2000,
+          active: true,
+        }
+      },{
+        order: 2,
+        application: {
+          name: 'Soft Pull up',
+          exercise: id_pullup,
+          type: id_isometric,
+          total_type: 12,
+          single_duration: 1500,
+          active: true,
+        }
+      } 
+      ]
+    }]
   }
   , function() {
     console.log('finished populating rutines');

@@ -8,10 +8,42 @@ var RutineSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	parts: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Part'
-	}],
+	parts: [
+	{
+		parttype: {
+			type: Schema.Types.ObjectId,
+			ref: 'Parttype',
+			required: true
+		},
+		applications: [{
+			order: Number,
+			application: {
+				name: {
+					type: String,
+					required: true
+				},
+				exercise: {
+					type: Schema.Types.ObjectId,
+					ref: 'Exercise',
+					required: true
+				},
+				type: {
+					type: Schema.Types.ObjectId,
+					ref: 'Apptype',
+					required: true
+				},
+				total_type: {
+					type: Number
+				},
+				single_duration: {
+					type: Number
+				},
+				active: Boolean
+			}
+		}
+		]
+	}
+	],
 	active: Boolean
 });
 
