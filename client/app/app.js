@@ -7,18 +7,18 @@ angular.module('roodApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'uiGmapgoogle-maps'
-])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
-    $urlRouterProvider
-      .otherwise('/');
+  'dndLists'
+  ])
+.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  $urlRouterProvider
+  .otherwise('/');
 
-    $locationProvider.html5Mode(true);
-    $httpProvider.interceptors.push('authInterceptor');
-  })
+  $locationProvider.html5Mode(true);
+  $httpProvider.interceptors.push('authInterceptor');
+})
 
-  .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
-    return {
+.factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
+  return {
       // Add authorization token to headers
       request: function (config) {
         config.headers = config.headers || {};
@@ -43,7 +43,7 @@ angular.module('roodApp', [
     };
   })
 
-  .run(function ($rootScope, $location, Auth) {
+.run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
